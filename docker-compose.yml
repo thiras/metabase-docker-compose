@@ -1,0 +1,53 @@
+version: "3.5"
+
+services:
+
+  postgres:
+    image: postgres
+    volumes:
+      - "./db_data:/var/lib/postgresql/data"
+    restart: always
+    environment:
+      POSTGRES_DB: metabase
+      POSTGRES_USER: metabase_usr
+      POSTGRES_PASSWORD: /run/secrets/postgres_password
+    secrets:
+      - postgres_password
+
+  metabase:
+    depends_on:
+      - postgres
+    image: metabase/metabase
+    ports:
+      - "3000:3000"
+    restart: always
+    environment:
+      JAVA_TIMEZONE: Europe/Istanbul
+      MB_ENCRYPTION_SECRET_KEY: /run/secrets/mb_secret
+      MB_DB_TYPE: postgres
+      MB_DB_DBNAME: metabase
+      MB_DB_PORT: 5432
+      MB_DB_USER: metabase
+      MB_DB_PASS: /run/secrets/postgres_password
+      MB_DB_HOST: postgres
+    secrets:
+      - postgres_password
+      - mb_secret
+
+  pgadmin:
+    depends_on:
+      - postgres
+    image: dpage/pgadmin4
+    ports:
+      - "3001:80"
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: mail@example.com
+      PGADMIN_DEFAULT_PASSWORD: /run/secrets/pgadmin_password
+    secrets:
+      - pgadmin_password
+
+secrets:
+  mb_secret:
+  postgres_password:
+  pgadmin_password:
