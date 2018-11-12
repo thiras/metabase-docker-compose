@@ -30,3 +30,4 @@ and then point to `localhost:3000`. It may take couple of minutes to get a respo
 - [ ] MongoDB setup at the start
 - [ ] Improve documentation
 - [ ] Clustering?
+- [ ] Inject sample data
