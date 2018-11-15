@@ -9,12 +9,12 @@ This project aims to build a production ready docker-compose file for Metabase.
 - [Roadmap](#roadmap)
 
 ## Prepering
-First, you need to create docker secrets:
+First, you need to create docker secrets files:
 
 ```
-openssl rand -base64 16 | docker secret create mb_secret -
-openssl rand -base64 16 | docker secret create postgres_password -
-openssl rand -base64 16 | docker secret create pgadmin_password -
+openssl rand -base64 16 > mb.secret
+openssl rand -base64 16 > postgres_password.secret
+openssl rand -base64 16 > pgadmin_password.secret
 ```
 
 Do not forget adjust `JAVA_TIMEZONE` environment according to your timezone. You should also adjust `PGADMIN_DEFAULT_EMAIL` variable with your email.
