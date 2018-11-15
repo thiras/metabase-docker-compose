@@ -1,1 +1,3 @@
 *.secret
+db_data/
+db_data/*
