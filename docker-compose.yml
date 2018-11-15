@@ -3,7 +3,7 @@ version: "3.5"
 services:
 
   postgres:
-    image: postgres
+    image: postgres:10
     volumes:
       - "./db_data:/var/lib/postgresql/data"
     restart: always
