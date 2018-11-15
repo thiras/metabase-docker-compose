@@ -10,9 +10,7 @@ services:
     environment:
       POSTGRES_DB: metabase
       POSTGRES_USER: metabase_usr
-      POSTGRES_PASSWORD: /run/secrets/postgres_password
-    secrets:
-      - postgres_password
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
   metabase:
     depends_on:
@@ -23,16 +21,13 @@ services:
     restart: always
     environment:
       JAVA_TIMEZONE: Europe/Istanbul
-      MB_ENCRYPTION_SECRET_KEY: /run/secrets/mb
+      MB_ENCRYPTION_SECRET_KEY: ${MB}
       MB_DB_TYPE: postgres
       MB_DB_DBNAME: metabase
       MB_DB_PORT: 5432
       MB_DB_USER: metabase_usr
-      MB_DB_PASS: /run/secrets/postgres_password
+      MB_DB_PASS: ${POSTGRES_PASSWORD}
       MB_DB_HOST: postgres
-    secrets:
-      - postgres_password
-      - mb
 
   pgadmin:
     depends_on:
@@ -43,14 +38,4 @@ services:
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: mail@example.com
-      PGADMIN_DEFAULT_PASSWORD: /run/secrets/pgadmin_password
-    secrets:
-      - pgadmin_password
-
-secrets:
-  mb:
-    file: mb.secret
-  postgres_password:
-    file: pgadmin_password.secret
-  pgadmin_password:
-    file: postgres_password.secret
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
